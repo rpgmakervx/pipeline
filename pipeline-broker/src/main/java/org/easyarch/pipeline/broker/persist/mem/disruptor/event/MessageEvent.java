@@ -15,4 +15,15 @@ public class MessageEvent{
     public void setMessage(Message message){
         this.message = message;
     }
+
+    public Message getMessage() {
+        return message;
+    }
+
+    @Override
+    public String toString() {
+        return "MessageEvent{" +
+                "message=" + message +
+                '}';
+    }
 }
