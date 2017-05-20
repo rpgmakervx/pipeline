@@ -12,6 +12,7 @@ import org.easyarch.pipeline.broker.persist.mem.disruptor.event.MessageEventFact
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by xingtianyu on 17-5-20
@@ -20,16 +21,21 @@ import java.util.concurrent.Executors;
  */
 
 public class DisruptorQueue implements MQueue<Message> {
-    private static final int DEFAULT_SIZE = 2<<4;
+    private static final int DEFAULT_SIZE = 4;
     private Disruptor<MessageEvent> disruptor;
+
+    private String queueName;
 
     private RingBuffer<MessageEvent> ringBuffer;
 
-    public DisruptorQueue(){
-        this(DEFAULT_SIZE);
+    private volatile AtomicInteger head = new AtomicInteger(0);
+
+    public DisruptorQueue(String queueName){
+        this(queueName,DEFAULT_SIZE);
     }
 
-    public DisruptorQueue(int factor) {
+    public DisruptorQueue(String queueName,int factor) {
+        this.queueName = queueName;
         this.disruptor = new Disruptor<>(new MessageEventFactory(), 2<<factor,
                 Executors.defaultThreadFactory(), ProducerType.SINGLE,
                 new YieldingWaitStrategy());
@@ -40,7 +46,7 @@ public class DisruptorQueue implements MQueue<Message> {
 
     @Override
     public Message get() {
-        MessageEvent messageEvent = ringBuffer.get(0);
+        MessageEvent messageEvent = ringBuffer.get(head.get());
         return messageEvent.getMessage();
     }
 
@@ -64,8 +70,12 @@ public class DisruptorQueue implements MQueue<Message> {
 
     @Override
     public Message fetch() {
-        MessageEvent messageEvent = ringBuffer.get(ringBuffer.next() - 1);
-        return messageEvent.getMessage();
+        Message message = get();
+        int index = head.incrementAndGet();
+        if (index >= ringBuffer.getCursor()){
+            return null;
+        }
+        return message;
     }
 
     @Override

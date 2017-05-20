@@ -6,7 +6,7 @@ package org.easyarch.pipeline.broker.persist.mem.redis;
  * description:
  */
 
-public class RedisKits {
+class RedisKits {
 
     public static RedisClient.Strings strings(){
         return RedisClient.getInstance().strings();

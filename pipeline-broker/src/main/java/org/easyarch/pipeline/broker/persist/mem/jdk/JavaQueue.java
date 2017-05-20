@@ -16,9 +16,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class JavaQueue implements MQueue<Message> {
 
+    private String queueName;
+
     private List<Message> queue;
 
-    public JavaQueue(){
+    public JavaQueue(String queueName){
+        this.queueName = queueName;
         this.queue = new CopyOnWriteArrayList<>();
     }
 

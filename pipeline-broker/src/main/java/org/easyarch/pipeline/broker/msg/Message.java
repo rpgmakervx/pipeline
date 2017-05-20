@@ -14,6 +14,10 @@ public class Message {
 
     private Body body;
 
+    public Message(){
+        this(new Header(),new Body(null));
+    }
+
     public Message(Header header, Body body) {
         this.header = header;
         this.body = body;
