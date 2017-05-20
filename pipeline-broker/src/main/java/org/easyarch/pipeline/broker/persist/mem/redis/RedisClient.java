@@ -1,5 +1,6 @@
 package org.easyarch.pipeline.broker.persist.mem.redis;
 
+import org.easyarch.pipeline.broker.kits.PropertyKits;
 import redis.clients.jedis.*;
 import redis.clients.util.SafeEncoder;
 
@@ -48,11 +49,11 @@ class RedisClient {
     private void initJedisPool() {
         String configPath = this.getClass().getResource("/config.properties").getPath();
         JedisPoolConfig config = new JedisPoolConfig();
-//        properties = PropertyKits.loadProperties(configPath);
-//        config.setMaxIdle(Integer.valueOf(properties.getProperty("redis.pool.maxIdle")));
-//        config.setMinIdle(Integer.valueOf(properties.getProperty("redis.pool.minIdle")));
-//        config.setMaxWaitMillis(Long.valueOf(properties.getProperty("redis.pool.maxWait")));
-//        config.setMaxTotal(Integer.valueOf(properties.getProperty("redis.pool.maxTotal")));
+        properties = PropertyKits.loadProperties(configPath);
+        config.setMaxIdle(Integer.valueOf(properties.getProperty("redis.pool.maxIdle")));
+        config.setMinIdle(Integer.valueOf(properties.getProperty("redis.pool.minIdle")));
+        config.setMaxWaitMillis(Long.valueOf(properties.getProperty("redis.pool.maxWait")));
+        config.setMaxTotal(Integer.valueOf(properties.getProperty("redis.pool.maxTotal")));
         jedisPool = new JedisPool(
                 config,
                 properties.getProperty("redis.ip"),
