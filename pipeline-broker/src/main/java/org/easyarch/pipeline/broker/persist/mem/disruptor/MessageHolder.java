@@ -7,8 +7,9 @@ import com.lmax.disruptor.dsl.ProducerType;
 import org.easyarch.pipeline.broker.msg.Message;
 import org.easyarch.pipeline.broker.persist.mem.disruptor.event.MessageEvent;
 import org.easyarch.pipeline.broker.persist.mem.disruptor.event.MessageEventFactory;
-import org.easyarch.pipeline.broker.persist.mem.disruptor.handler.MessageEventHandler;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 
 /**
@@ -22,11 +23,14 @@ public class MessageHolder {
     private static final int DEFAULT_SIZE = 1024 * 1024;
 
     private static Disruptor<MessageEvent> disruptor;
+
+    private static Map<String,Disruptor<MessageEvent>> queue = new ConcurrentHashMap<>();
+
     static {
         disruptor = new Disruptor<>(new MessageEventFactory(),
                 DEFAULT_SIZE, Executors.defaultThreadFactory(), ProducerType.SINGLE,
                 new YieldingWaitStrategy());
-        disruptor.handleEventsWith(new MessageEventHandler());
+//        disruptor.handleEventsWith(new MessageEventHandler());
         disruptor.start();
     }
     public static Disruptor<MessageEvent> getDisruptor(){
