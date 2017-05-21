@@ -1,9 +1,9 @@
 package org.easyarch.pipeline.broker.persist.mem.disruptor.pub;
 
 import com.lmax.disruptor.RingBuffer;
-import org.easyarch.pipeline.broker.msg.Message;
 import org.easyarch.pipeline.broker.persist.mem.disruptor.MessageHolder;
 import org.easyarch.pipeline.broker.persist.mem.disruptor.event.MessageEvent;
+import org.easyarch.pipeline.common.msg.Message;
 
 /**
  * Created by xingtianyu on 17-5-19

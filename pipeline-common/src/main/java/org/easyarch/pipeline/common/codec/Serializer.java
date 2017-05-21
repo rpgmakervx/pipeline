@@ -1,4 +1,4 @@
-package org.easyarch.pipeline.broker.codec;
+package org.easyarch.pipeline.common.codec;
 
 /**
  * Description :

@@ -1,9 +1,9 @@
 package org.easyarch.pipeline.broker.persist.mem.redis;
 
-import org.easyarch.pipeline.broker.codec.Serializer;
-import org.easyarch.pipeline.broker.codec.proto.ProtoBufSerializer;
-import org.easyarch.pipeline.broker.msg.Message;
 import org.easyarch.pipeline.broker.persist.mem.MQueue;
+import org.easyarch.pipeline.common.codec.Serializer;
+import org.easyarch.pipeline.common.codec.proto.ProtoBufSerializer;
+import org.easyarch.pipeline.common.msg.Message;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,5 +67,20 @@ public class RedisQueue implements MQueue<Message> {
 
     private long length(){
         return lists.llen(queueName);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RedisQueue)) return false;
+
+        RedisQueue that = (RedisQueue) o;
+
+        return queueName != null ? queueName.equals(that.queueName) : that.queueName == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return queueName != null ? queueName.hashCode() : 0;
     }
 }

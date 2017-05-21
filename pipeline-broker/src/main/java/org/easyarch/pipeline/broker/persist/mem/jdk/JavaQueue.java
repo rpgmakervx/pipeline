@@ -1,7 +1,7 @@
 package org.easyarch.pipeline.broker.persist.mem.jdk;
 
-import org.easyarch.pipeline.broker.msg.Message;
 import org.easyarch.pipeline.broker.persist.mem.MQueue;
+import org.easyarch.pipeline.common.msg.Message;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +42,9 @@ public class JavaQueue implements MQueue<Message> {
 
     @Override
     public Message fetch() {
+        if (queue.isEmpty()){
+            return null;
+        }
         return queue.remove(0);
     }
 
@@ -54,4 +57,18 @@ public class JavaQueue implements MQueue<Message> {
         return list;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof JavaQueue)) return false;
+
+        JavaQueue javaQueue = (JavaQueue) o;
+
+        return queueName != null ? queueName.equals(javaQueue.queueName) : javaQueue.queueName == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return queueName != null ? queueName.hashCode() : 0;
+    }
 }

@@ -1,6 +1,7 @@
 package org.easyarch.pipeline.broker.persist.mem;
 
-import org.easyarch.pipeline.broker.persist.mem.disruptor.event.MessageEvent;
+
+import org.easyarch.pipeline.common.msg.Message;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,17 +14,17 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Queues {
 
-    private static Map<String,MQueue<MessageEvent>> queues = new ConcurrentHashMap();
+    private static Map<String,MQueue<Message>> queues = new ConcurrentHashMap();
 
-    public void addQueue(String id,MQueue<MessageEvent> queue){
+    public static void addQueue(String id,MQueue<Message> queue){
         queues.put(id,queue);
     }
 
-    public MQueue<MessageEvent> delQueue(String id){
+    public static MQueue<Message> delQueue(String id){
         return queues.remove(id);
     }
 
-    public MQueue<MessageEvent> getQueue(String id){
+    public static MQueue<Message> getQueue(String id){
         return queues.get(id);
     }
 

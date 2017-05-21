@@ -1,4 +1,4 @@
-package org.easyarch.pipeline.broker.msg;
+package org.easyarch.pipeline.common.msg.body;
 
 /**
  * Created by xingtianyu on 17-5-18

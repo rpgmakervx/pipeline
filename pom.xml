@@ -11,6 +11,7 @@
     <modules>
         <module>pipeline-client</module>
         <module>pipeline-broker</module>
+        <module>pipeline-common</module>
     </modules>
 
 

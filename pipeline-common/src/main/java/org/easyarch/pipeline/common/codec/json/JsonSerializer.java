@@ -1,7 +1,7 @@
-package org.easyarch.pipeline.broker.codec.json;
+package org.easyarch.pipeline.common.codec.json;
 
 import com.alibaba.fastjson.JSON;
-import org.easyarch.pipeline.broker.codec.Serializer;
+import org.easyarch.pipeline.common.codec.Serializer;
 
 import java.nio.charset.Charset;
 

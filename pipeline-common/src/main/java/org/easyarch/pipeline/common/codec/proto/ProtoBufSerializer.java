@@ -1,11 +1,11 @@
-package org.easyarch.pipeline.broker.codec.proto;
+package org.easyarch.pipeline.common.codec.proto;
 
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtobufIOUtil;
 import com.dyuproject.protostuff.Schema;
 import com.dyuproject.protostuff.runtime.RuntimeEnv;
 import com.dyuproject.protostuff.runtime.RuntimeSchema;
-import org.easyarch.pipeline.broker.codec.Serializer;
+import org.easyarch.pipeline.common.codec.Serializer;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

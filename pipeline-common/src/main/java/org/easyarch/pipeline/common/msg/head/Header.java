@@ -1,4 +1,4 @@
-package org.easyarch.pipeline.broker.msg;
+package org.easyarch.pipeline.common.msg.head;
 
 /**
  * Created by xingtianyu on 17-5-18
@@ -12,9 +12,11 @@ public class Header {
 
     private Integer mode;
 
-    private Long topicId;
+    private Integer act;
 
-    private Long queueId;
+    private String topicId;
+
+    private String queueId;
 
     public Integer getCode() {
         return code;
@@ -32,19 +34,27 @@ public class Header {
         this.mode = mode;
     }
 
-    public Long getTopicId() {
+    public String getTopicId() {
         return topicId;
     }
 
-    public void setTopicId(Long topicId) {
+    public void setTopicId(String topicId) {
         this.topicId = topicId;
     }
 
-    public Long getQueueId() {
+    public String getQueueId() {
         return queueId;
     }
 
-    public void setQueueId(Long queueId) {
+    public void setQueueId(String queueId) {
         this.queueId = queueId;
+    }
+
+    public Integer getAct() {
+        return act;
+    }
+
+    public void setAct(Integer act) {
+        this.act = act;
     }
 }

@@ -4,10 +4,10 @@ import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.YieldingWaitStrategy;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
-import org.easyarch.pipeline.broker.msg.Message;
 import org.easyarch.pipeline.broker.persist.mem.MQueue;
 import org.easyarch.pipeline.broker.persist.mem.disruptor.event.MessageEvent;
 import org.easyarch.pipeline.broker.persist.mem.disruptor.event.MessageEventFactory;
+import org.easyarch.pipeline.common.msg.Message;
 
 import java.util.ArrayList;
 import java.util.List;
