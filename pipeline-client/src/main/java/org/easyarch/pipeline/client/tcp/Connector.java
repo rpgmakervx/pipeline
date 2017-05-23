@@ -7,8 +7,8 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import org.easyarch.pipeline.client.http.asynclient.handler.BaseClientChildHandler;
-import org.easyarch.pipeline.client.http.asynclient.handler.callback.AsyncResponseHandler;
+import org.easyarch.pipeline.client.listener.MessageListener;
+import org.easyarch.pipeline.client.tcp.handler.BaseChildHandler;
 import org.easyarch.pipeline.common.msg.Message;
 
 /**
@@ -29,7 +29,7 @@ public class Connector {
         this.port = port;
     }
 
-    private void connect(AsyncResponseHandler handler) {
+    private void connect(MessageListener listener) {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
             b = new Bootstrap();
@@ -38,7 +38,7 @@ public class Connector {
                     .option(ChannelOption.SO_KEEPALIVE, true)
                     .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 1000)
                     .option(ChannelOption.SO_KEEPALIVE, true)
-                    .handler(new BaseClientChildHandler(workerGroup, handler));
+                    .handler(new BaseChildHandler(listener));
             future = b.connect(ip, port).sync();
         } catch (Exception e) {
             e.printStackTrace();
