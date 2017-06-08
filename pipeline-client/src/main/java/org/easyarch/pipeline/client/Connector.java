@@ -1,4 +1,4 @@
-package org.easyarch.pipeline.client.tcp;
+package org.easyarch.pipeline.client;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -17,7 +17,7 @@ import org.easyarch.pipeline.common.msg.Message;
  * description:
  */
 
-public class Connector {
+class Connector {
 
     private ChannelFuture future;
     private Bootstrap b;
@@ -29,7 +29,7 @@ public class Connector {
         this.port = port;
     }
 
-    private void connect(MessageListener listener) {
+    public void connect(MessageListener listener) {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
             b = new Bootstrap();

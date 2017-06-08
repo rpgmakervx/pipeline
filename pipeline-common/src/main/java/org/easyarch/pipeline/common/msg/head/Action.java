@@ -28,9 +28,13 @@ public interface Action {
      */
     int CON_ACK = 4;
     /**
+     * 消费者跟broker建立tcp链接
+     */
+    int CON_SYN = 5;
+    /**
      * 生产者生产完的消息进入结束状态，act会被设置为BODY,表示该消息带消息体.
      * 客户端收到消息带fin的表示收到消息(客户端判断)
      */
-    int BODY = 5;
+    int BODY = 6;
 
 }

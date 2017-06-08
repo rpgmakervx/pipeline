@@ -1,4 +1,4 @@
-package org.easyarch.pipeline.client.producer;
+package org.easyarch.pipeline.client;
 
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -14,6 +14,10 @@ import javax.jms.*;
 public class Producer {
 
     private static final int SEND_NUMBER = 5;
+
+    public Producer(Connector connector){
+
+    }
 
     public static void main(String[] args) {
         // ConnectionFactory ：连接工厂，JMS 用它创建连接
