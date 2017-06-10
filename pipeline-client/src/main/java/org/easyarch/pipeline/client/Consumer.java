@@ -1,6 +1,10 @@
 package org.easyarch.pipeline.client;
 
+import org.easyarch.pipeline.client.config.MQConfig;
 import org.easyarch.pipeline.client.listener.ConMessageListener;
+import org.easyarch.pipeline.common.msg.Message;
+import org.easyarch.pipeline.common.msg.head.Action;
+import org.easyarch.pipeline.common.msg.head.Header;
 
 
 /**
@@ -13,12 +17,22 @@ public class Consumer {
 
     private Connector connector;
 
-    public Consumer(Connector connector){
-        this.connector = connector;
+    private Destination destination;
+
+    private MQConfig config = MQConfig.config();
+
+    public Consumer(Destination destination){
+        this.connector = new Connector(config.getIp(),config.getPort());
+        this.destination = destination;
     }
 
     public void recieve(ConMessageListener listener){
         connector.connect(listener);
+        Header header = new Header();
+        header.setAct(Action.CONSUME);
+        header.setDestId(destination.getDestinationId());
+        connector.send(new Message(header,null));
+        System.out.println("准备接受消息");
     }
 
 //    public static void main(String[] args) {

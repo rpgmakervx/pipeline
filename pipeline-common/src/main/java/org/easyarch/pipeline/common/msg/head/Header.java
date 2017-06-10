@@ -14,9 +14,7 @@ public class Header {
 
     private Integer act;
 
-    private String topicId;
-
-    private String queueId;
+    private String destId;
 
     public Integer getCode() {
         return code;
@@ -34,20 +32,12 @@ public class Header {
         this.mode = mode;
     }
 
-    public String getTopicId() {
-        return topicId;
+    public String getDestId() {
+        return destId;
     }
 
-    public void setTopicId(String topicId) {
-        this.topicId = topicId;
-    }
-
-    public String getQueueId() {
-        return queueId;
-    }
-
-    public void setQueueId(String queueId) {
-        this.queueId = queueId;
+    public void setDestId(String destId) {
+        this.destId = destId;
     }
 
     public Integer getAct() {
@@ -56,5 +46,15 @@ public class Header {
 
     public void setAct(Integer act) {
         this.act = act;
+    }
+
+    @Override
+    public String toString() {
+        return "Header{" +
+                "code=" + code +
+                ", mode=" + mode +
+                ", act=" + act +
+                ", destId='" + destId + '\'' +
+                '}';
     }
 }

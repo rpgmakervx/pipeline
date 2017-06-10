@@ -7,4 +7,5 @@ package org.easyarch.pipeline.broker.session;
  */
 
 public interface ISession {
+
 }

@@ -21,6 +21,12 @@ public class ByteKits {
     public static ByteBuf toByteBuf(String content){
         return toByteBuf(content.getBytes());
     }
+
+    /**
+     * 拷贝字节后再读取，原来的bytebuf不会受影响
+     * @param buf
+     * @return
+     */
     public static byte[] toByteArray(ByteBuf buf){
         if (buf == null){
             return new byte[0];
@@ -41,5 +47,23 @@ public class ByteKits {
         }
         ByteBuf copyBuf = buf.copy();
         return new String(toByteArray(copyBuf));
+    }
+
+    /**
+     * 从bytebuf中读取字节
+     * @param buf
+     * @return
+     */
+    public static byte[] readByteBuf(ByteBuf buf){
+        if (buf == null){
+            return new byte[0];
+        }
+        if (buf == null||buf.readableBytes() == 0){
+            return new byte[0];
+        }
+        int readable = buf.readableBytes();
+        byte[] bytes = new byte[readable];
+        buf.readBytes(bytes);
+        return bytes;
     }
 }

@@ -26,8 +26,18 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-        byte[] data = ByteKits.toByteArray(in);
+        if (in.readableBytes() <= 0){
+            return;
+        }
+        byte[] data = ByteKits.readByteBuf(in);
         Message message = serializer.deserialize(data,Message.class);
+        System.out.println("解码器得到的消息："+message);
         out.add(message);
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        System.out.println("解码异常");
+        cause.printStackTrace();
     }
 }

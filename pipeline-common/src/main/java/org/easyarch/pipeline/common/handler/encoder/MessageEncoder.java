@@ -24,6 +24,13 @@ public class MessageEncoder extends MessageToByteEncoder<Message> {
     @Override
     protected void encode(ChannelHandlerContext ctx, Message msg, ByteBuf out) throws Exception {
         byte[] data = serializer.serialize(msg);
-        out.readBytes(data);
+        out.writeBytes(data);
+        System.out.println("编码数据："+msg);
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        System.out.println("编码异常");
+        cause.printStackTrace();
     }
 }

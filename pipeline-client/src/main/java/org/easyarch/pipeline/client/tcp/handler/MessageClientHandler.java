@@ -30,6 +30,7 @@ public class MessageClientHandler extends ChannelInboundHandlerAdapter {
         Message message = (Message) msg;
         Header header = message.getHeader();
         int act = header.getAct();
+        System.out.println("客户端收到消息："+message);
         switch (act){
             case Action.PUB_ACK:
                 ((PubMessageListener)listener).onAck(header);
@@ -37,10 +38,10 @@ public class MessageClientHandler extends ChannelInboundHandlerAdapter {
             case Action.POLL:
                 ((ConMessageListener)listener).onPoll(header);
                 Header head = new Header();
-                head.setAct(Action.POLL);
+                head.setAct(Action.CON_POLL);
                 head.setCode(200);
-                head.setQueueId(header.getQueueId());
-                Message fetchMessage = new Message(header,null);
+                head.setDestId(header.getDestId());
+                Message fetchMessage = new Message(head,null);
                 channel.writeAndFlush(fetchMessage);
                 break;
             case Action.BODY:

@@ -53,6 +53,7 @@ public class RedisQueue implements MQueue<Message> {
             return null;
         }
         lists.lrem(queueName.getBytes(),1,serializer.serialize(message));
+        System.out.println("fetch一个元素,queueName:"+queueName+":"+message);
         return message;
     }
 

@@ -18,7 +18,8 @@ public class BaseChildHandler extends ChannelInitializer<SocketChannel> {
 
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
-        pipeline.addLast(new MessageDecoder());
         pipeline.addLast(new MessageEncoder());
+        pipeline.addLast(new MessageDecoder());
+        pipeline.addLast(new MQHandler());
     }
 }

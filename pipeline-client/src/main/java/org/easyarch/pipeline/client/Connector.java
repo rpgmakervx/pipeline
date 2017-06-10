@@ -48,6 +48,7 @@ class Connector {
     public void send(Message message){
         Channel channel = future.channel();
         channel.writeAndFlush(message);
+        System.out.println("发送一条消息："+message);
     }
 
 }
