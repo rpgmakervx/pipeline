@@ -6,10 +6,10 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.easyarch.pipeline.broker.persist.mem.MQueue;
 import org.easyarch.pipeline.broker.persist.mem.Queues;
 import org.easyarch.pipeline.broker.persist.mem.redis.RedisQueue;
+import org.easyarch.pipeline.common.msg.Message;
 import org.easyarch.pipeline.common.msg.MessageFactory;
 import org.easyarch.pipeline.common.msg.head.Action;
 import org.easyarch.pipeline.common.msg.head.Header;
-import org.easyarch.pipeline.common.msg.Message;
 
 /**
  * Created by xingtianyu on 17-5-21
@@ -51,6 +51,9 @@ public class MQHandler extends ChannelInboundHandlerAdapter {
                 }
                 channel.writeAndFlush(pollMessage);
                 System.out.println("poll 写回的消息："+pollMessage);
+                break;
+            case Action.REGIST:
+
                 break;
             case Action.CON_POLL:
                 Message consumeMessage = consume(id);
