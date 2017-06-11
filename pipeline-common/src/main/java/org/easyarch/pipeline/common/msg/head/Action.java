@@ -42,6 +42,10 @@ public interface Action {
     int BODY = 7;
 
     /**
+     * 消费者获取的消息不存在
+     */
+    int NOT_EXISTS = 8;
+    /**
      * 不作任何处理
      */
     int NONE = 10;

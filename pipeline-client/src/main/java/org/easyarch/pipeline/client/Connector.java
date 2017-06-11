@@ -20,6 +20,7 @@ import org.easyarch.pipeline.common.msg.Message;
 class Connector {
 
     private ChannelFuture future;
+    private EventLoopGroup workerGroup;
     private Bootstrap b;
     private String ip;
     private int port;
@@ -30,7 +31,7 @@ class Connector {
     }
 
     public void connect(MessageListener listener) {
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        this.workerGroup = new NioEventLoopGroup();
         try {
             b = new Bootstrap();
             b.group(workerGroup)
@@ -49,6 +50,12 @@ class Connector {
         Channel channel = future.channel();
         channel.writeAndFlush(message);
         System.out.println("发送一条消息："+message);
+    }
+
+    public void close(){
+        Channel channel = future.channel();
+        channel.close();
+        this.workerGroup.shutdownGracefully();
     }
 
 }

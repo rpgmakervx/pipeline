@@ -37,6 +37,14 @@ public class MessageFactory {
         return new Message(header,new Body(message));
     }
 
+    public static Message createConsumeMessage(String destId,int mode){
+        Header header = new Header();
+        header.setAct(Action.CONSUME);
+        header.setMode(mode);
+        header.setDestId(destId);
+        return new Message(header,null);
+    }
+
     public static Message createPubMessage(Object message,String destId){
         Header header = new Header();
         header.setAct(Action.PUBLISH);

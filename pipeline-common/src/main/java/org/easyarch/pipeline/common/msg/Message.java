@@ -17,7 +17,7 @@ public class Message {
     private Body body;
 
     public Message(){
-        this(new Header(),new Body(null));
+        this(new Header(),null);
     }
 
     public Message(Header header, Body body) {
@@ -39,6 +39,10 @@ public class Message {
 
     public void setBody(Body body) {
         this.body = body;
+    }
+
+    public boolean isEmpty(){
+        return body == null||body.getData() == null;
     }
 
     @Override

@@ -6,6 +6,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.easyarch.pipeline.client.listener.ConMessageListener;
 import org.easyarch.pipeline.client.listener.MessageListener;
 import org.easyarch.pipeline.client.listener.PubMessageListener;
+import org.easyarch.pipeline.common.msg.MessageFactory;
 import org.easyarch.pipeline.common.msg.head.Action;
 import org.easyarch.pipeline.common.msg.head.Header;
 import org.easyarch.pipeline.common.msg.Message;
@@ -37,14 +38,15 @@ public class MessageClientHandler extends ChannelInboundHandlerAdapter {
                 break;
             case Action.POLL:
                 ((ConMessageListener)listener).onPoll(header);
-                Header head = new Header();
-                head.setAct(Action.CON_POLL);
-                head.setCode(200);
-                head.setDestId(header.getDestId());
-                Message fetchMessage = new Message(head,null);
+                Message fetchMessage = MessageFactory
+                        .createConsumerPollMessage(header.getDestId(),header.getMode());
                 channel.writeAndFlush(fetchMessage);
                 break;
             case Action.BODY:
+                listener.onMessage(message);
+                break;
+            case Action.NOT_EXISTS:
+                ((ConMessageListener)listener).onPoll(header);
                 listener.onMessage(message);
                 break;
         }

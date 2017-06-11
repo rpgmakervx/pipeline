@@ -26,7 +26,7 @@ public class ConsumerMain {
 
             @Override
             public void onMessage(Message message) {
-                System.out.println("recieve message:"+message);
+                System.out.println("recieve message:"+message.getBody().getData());
 
             }
         });

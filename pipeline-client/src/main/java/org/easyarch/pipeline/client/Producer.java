@@ -33,6 +33,10 @@ public class Producer {
         System.out.println("生产了一条消息："+message);
     }
 
+    public void close(){
+        connector.close();
+    }
+
 //    public static void main(String[] args) {
 //        // ConnectionFactory ：连接工厂，JMS 用它创建连接
 //        ConnectionFactory connectionFactory;

@@ -6,6 +6,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.easyarch.pipeline.broker.persist.mem.MQueue;
 import org.easyarch.pipeline.broker.persist.mem.Queues;
 import org.easyarch.pipeline.broker.persist.mem.redis.RedisQueue;
+import org.easyarch.pipeline.common.msg.MessageFactory;
 import org.easyarch.pipeline.common.msg.head.Action;
 import org.easyarch.pipeline.common.msg.head.Header;
 import org.easyarch.pipeline.common.msg.Message;
@@ -44,14 +45,10 @@ public class MQHandler extends ChannelInboundHandlerAdapter {
             case Action.CONSUME:
                 Message storageMessage = getMessage(id);
                 System.out.println("消费模式得到的消息："+storageMessage);
-                Header head = new Header();
-                head.setAct(Action.POLL);
+                Message pollMessage = MessageFactory.createPollMessage(id,header.getMode());
                 if (storageMessage == null){
-                    head.setAct(Action.NONE);
-                    return ;
+                    pollMessage.getHeader().setAct(Action.NOT_EXISTS);
                 }
-                head.setDestId(id);
-                Message pollMessage = new Message(head,null);
                 channel.writeAndFlush(pollMessage);
                 System.out.println("poll 写回的消息："+pollMessage);
                 break;
@@ -66,13 +63,13 @@ public class MQHandler extends ChannelInboundHandlerAdapter {
 
     public void publish(Message message){
         Header header = message.getHeader();
-        int mode = header.getMode();
         String queueId = header.getDestId();
         MQueue queue = Queues.getQueue(queueId);
         if (queue == null){
             queue = new RedisQueue(queueId);
         }
         queue.push(message);
+        System.out.println("持久化一个消息："+message);
         Queues.addQueue(queueId,queue);
     }
 
