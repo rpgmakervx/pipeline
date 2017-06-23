@@ -1,7 +1,5 @@
 package org.easyarch.pipeline.client.listener;
 
-import org.easyarch.pipeline.common.msg.Message;
-
 /**
  * Created by code4j on 17-5-21
  * 下午8:46
@@ -10,6 +8,5 @@ import org.easyarch.pipeline.common.msg.Message;
 
 public interface MessageListener {
 
-    void onMessage(Message message);
 
 }

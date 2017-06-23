@@ -7,7 +7,6 @@ import org.easyarch.pipeline.broker.persist.mem.MQueue;
 import org.easyarch.pipeline.broker.persist.mem.Queues;
 import org.easyarch.pipeline.broker.persist.mem.redis.RedisQueue;
 import org.easyarch.pipeline.common.msg.Message;
-import org.easyarch.pipeline.common.msg.MessageFactory;
 import org.easyarch.pipeline.common.msg.head.Action;
 import org.easyarch.pipeline.common.msg.head.Header;
 
@@ -43,22 +42,11 @@ public class MQHandler extends ChannelInboundHandlerAdapter {
                 publish(message);
                 break;
             case Action.CONSUME:
-                Message storageMessage = getMessage(id);
-                System.out.println("消费模式得到的消息："+storageMessage);
-                Message pollMessage = MessageFactory.createPollMessage(id,header.getMode());
-                if (storageMessage == null){
-                    pollMessage.getHeader().setAct(Action.NOT_EXISTS);
-                }
-                channel.writeAndFlush(pollMessage);
-                System.out.println("poll 写回的消息："+pollMessage);
+                Message consumeMessage = consume(id);
+                channel.writeAndFlush(consumeMessage);
                 break;
             case Action.REGIST:
 
-                break;
-            case Action.CON_POLL:
-                Message consumeMessage = consume(id);
-                System.out.println("CON_POLL action:"+consumeMessage.getHeader().getAct());
-                channel.writeAndFlush(consumeMessage);
                 break;
         }
 

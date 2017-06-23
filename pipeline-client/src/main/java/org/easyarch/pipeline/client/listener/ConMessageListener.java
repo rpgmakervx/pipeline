@@ -1,6 +1,6 @@
 package org.easyarch.pipeline.client.listener;
 
-import org.easyarch.pipeline.common.msg.head.Header;
+import org.easyarch.pipeline.common.msg.Message;
 
 /**
  * Created by xingtianyu on 17-5-21
@@ -9,6 +9,5 @@ import org.easyarch.pipeline.common.msg.head.Header;
  */
 
 public interface ConMessageListener extends MessageListener {
-
-    void onPoll(Header header);
+    void onMessage(Message message);
 }
