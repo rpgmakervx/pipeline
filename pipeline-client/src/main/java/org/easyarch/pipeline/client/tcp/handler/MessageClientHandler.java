@@ -38,8 +38,7 @@ public class MessageClientHandler extends ChannelInboundHandlerAdapter {
             case Action.BODY:
                 ((ConMessageListener)listener).onMessage(message);
                 break;
-            case Action.NOT_EXISTS:
-                ((ConMessageListener)listener).onMessage(message);
+            case Action.REGISTED:
                 break;
         }
     }

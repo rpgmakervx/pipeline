@@ -3,6 +3,8 @@ package org.easyarch.pipeline.broker.server.handler;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import org.easyarch.pipeline.broker.manager.Registry;
+import org.easyarch.pipeline.broker.manager.channel.ClientChannel;
 import org.easyarch.pipeline.broker.persist.mem.MQueue;
 import org.easyarch.pipeline.broker.persist.mem.Queues;
 import org.easyarch.pipeline.broker.persist.mem.redis.RedisQueue;
@@ -35,7 +37,10 @@ public class MQHandler extends ChannelInboundHandlerAdapter {
         System.out.println("服务端收到一条消息："+message);
         Header header = message.getHeader();
         int act = header.getAct();
+        int mode = header.getMode();
         String id = header.getDestId();
+        //注册destination
+        Registry.registChannel(id,new ClientChannel(channel),mode);
         switch (act){
             case Action.PUBLISH:
                 message.getHeader().setAct(Action.BODY);
@@ -46,7 +51,6 @@ public class MQHandler extends ChannelInboundHandlerAdapter {
                 channel.writeAndFlush(consumeMessage);
                 break;
             case Action.REGIST:
-
                 break;
         }
 

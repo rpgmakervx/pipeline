@@ -31,37 +31,37 @@ public class Registry {
 
     public static final AttributeKey<ClientChannel> NETTY_CHANNEL_KEY = AttributeKey.valueOf("netty.channel");
 
-    public Set<ClientChannel> getChannelByQueue(String queueId){
+    public static Set<ClientChannel> getChannelByQueue(String queueId){
         return QUEUE_CHANNEL.get(queueId);
     }
 
-    public Set<ClientChannel> getChannelByTopic(String topicId){
+    public static Set<ClientChannel> getChannelByTopic(String topicId){
         return TOPIC_CHANNEL.get(topicId);
     }
 
-    public void registChannel(String destId, ClientChannel channel,int mode){
+    public static boolean registChannel(String destId, ClientChannel channel,int mode){
         REGISTRY.add(channel);
         switch (mode){
             case Mode.QUEUE:
                 if (QUEUE_CHANNEL.containsKey(destId)){
-                    QUEUE_CHANNEL.get(destId).add(channel);
+                    return QUEUE_CHANNEL.get(destId).add(channel);
                 }else{
                     Set<ClientChannel> channelSet = new CopyOnWriteArraySet<>();
                     channelSet.add(channel);
                     QUEUE_CHANNEL.put(destId,channelSet);
+                    return true;
                 }
-                break;
             case Mode.TOPIC:
                 if (TOPIC_CHANNEL.containsKey(destId)){
-                    TOPIC_CHANNEL.get(destId).add(channel);
+                    return TOPIC_CHANNEL.get(destId).add(channel);
                 }else{
                     Set<ClientChannel> channelSet = new CopyOnWriteArraySet<>();
                     channelSet.add(channel);
                     TOPIC_CHANNEL.put(destId,channelSet);
+                    return true;
                 }
-                break;
-            case Mode.FANOUT:
-                break;
+            default:
+                return false;
         }
     }
 
